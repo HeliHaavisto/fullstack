@@ -17,14 +17,20 @@ const App = () => {
 
 const [selected, setSelected] = useState(0);
 
+var index = copy.indexOf(Math.max(...copy))
+
 
 
   return (
     <div>
-      {anecdotes[selected]} <br></br>
+      <h1>Anecdote of the day</h1>
+      <p>{anecdotes[selected]}</p> <br></br>
       <p>has {copy[selected]} votes</p>
       <button onClick={() =>copy[selected] += 1}>vote</button>
       <button onClick={() => setSelected(Math.floor(Math.random()*7))}>next anecdote</button>
+      <h1>Anecdote with most votes</h1>
+      <p>{anecdotes[index]}</p>
+      <p> has {copy[index]} votes</p>
     </div>
   );
 }
