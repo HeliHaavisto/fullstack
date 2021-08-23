@@ -8,14 +8,17 @@ const Header = ({ course }) => {
 }
 
 const Total = ({ course }) => {
-  var summa = 0;
-  var i;
-  for (i=0; i < course.parts.length; i++) {
-    summa += course.parts[i].exercises
-  }
+  let initialValue = 0;
+  let sum = course.parts.reduce(function(previousValue, currentValue) {
+    return previousValue + currentValue.exercises
+  }, initialValue)
+  // let i;
+  // for (i=0; i < course.parts.length; i++) {
+  //   summa += course.parts[i].exercises
+  // }
   
   return(
-    <p>Number of exercises {summa}</p>
+    <p>Number of exercises {sum}</p>
   ) 
 }
 
