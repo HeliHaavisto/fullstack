@@ -1,11 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Course from './Course';
 
-const Header = ({ courses }) => {
-  return (
-    <h1>{courses.name}</h1>
-  )
-}
+
 
 const Total = ({ courses }) => {
   let initialValue = 0;
@@ -24,29 +21,7 @@ const Total = ({ courses }) => {
 }
 
 
-const Content = ({ courses }) => {
-    
-    const result = courses.parts.map(part =>
-    <p key={part.id}>{part.name} {part.exercises}</p> )
-    return (
-      <div>
-     
-      {result}
-      </div>
-    )
-  
-}
 
-const Course = ({courses}) => {
-  console.log({courses});
-  return(
-    <div>
-      <Header courses={courses} />
-      <Content courses={courses}/>
-    </div>
-
-  )
-}
 
 const App = () => {
   const courses = [
