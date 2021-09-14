@@ -8,6 +8,8 @@ const SearchBox= ({search}) => {
   )
 }
 
+
+
 const App=() => {
   const [ persons, setPersons] = useState([
     {name:'Arto Hellas', number: '040-123456', id:1},
@@ -56,33 +58,44 @@ const App=() => {
     setSearchInput(event.target.value)
   }
 
+  const PersonForm = () => {
+    return(
+      <form onSubmit= {addName}>
+          <div>
+            name:<input value={newName} onChange={handleNameChange} />
+          </div>
+          <div>
+            number:<input value={newNumber} onChange={handleNumberChange}/>
+          </div>
+          <div>
+            <button type="submit">add</button>
+          </div>
+        </form>
+    )
+  }
+
   const nameFilter = persons.filter((person)=> {
     return person.name.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase())
   })
-  console.log(nameFilter)
+  
   const nameList = nameFilter.map((person)=> {return (<p key={person.name}>{person.name} {person.number}</p>) })
+
+  const Persons = () => {
+    return(
+      <div>
+      {nameList}
+    </div>
+    )
+  }
 
   return (
     <div>
       <h2>Phonebook</h2>
       <SearchBox search={searchValueHandler}/>
-      <form onSubmit= {addName}>
-        <div>
-          name:<input value={newName} onChange={handleNameChange} />
-        </div>
-        <div>
-          number:<input value={newNumber} onChange={handleNumberChange}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm />
+     
       <h2>Numbers</h2>
-      <div>
-        {/* {persons.map(person =>
-         <p key={person.name}>{person.name} {person.number}</p> )} */}
-         {nameList}
-       </div>
+      <Persons />
     
     </div>
   );
