@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import axios from 'axios';
+import nameService from './services/names';
 
 const SearchBox= ({search}) => {
   return(
@@ -20,8 +20,8 @@ const App=() => {
   const [searchInput, setSearchInput] = useState('')
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
+   nameService
+   .getAll()
       .then(response => {
         setPersons(response.data)
       })
@@ -46,10 +46,11 @@ const App=() => {
     
     }
 
-   axios
-    .post('http://localhost:3001/persons', nameObject) 
+  nameService
+  .create(nameObject)
     .then( response => {
-      console.log(response)
+      setPersons(persons.concat(response.data))
+      setNewName('')
     })
   }
 
