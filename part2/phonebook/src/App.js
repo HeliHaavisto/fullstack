@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from "react";
 import nameService from './services/names';
+import axios from "axios";
 
 const SearchBox= ({search}) => {
   return(
@@ -54,7 +55,16 @@ const App=() => {
     })
   }
 
-
+  const handleRemove = (id) => {
+    console.log ("id on" + id);
+   axios
+    .delete(`http://localhost:3001/persons/${id}`)
+    .then(response =>{
+      console.log(response)
+      window.location.reload();
+    })
+      
+  }
 
   const handleNameChange = (event) => {
     console.log(event.target.value)
@@ -89,7 +99,9 @@ const App=() => {
     return person.name.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase())
   })
   
-  const nameList = nameFilter.map((person)=> {return (<p key={person.name}>{person.name} {person.number}</p>) })
+  const nameList = nameFilter.map((person)=> {return (<p key={person.name} >{person.name} {person.number}<button onClick={() => handleRemove(person.id)}>Delete</button></p>) })
+
+  // onClick={handleRemove(person.id)
 
   const Persons = () => {
     return(
