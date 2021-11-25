@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from "react";
 import nameService from './services/names';
 import axios from "axios";
+import './app.css';
 
 const SearchBox= ({search}) => {
   return(
@@ -19,6 +20,7 @@ const App=() => {
   const [newNumber, setNewNumber] = useState('')
 
   const [searchInput, setSearchInput] = useState('')
+  const [errorMessage,setErrorMessage] = useState('')
 
   useEffect(() => {
    nameService
@@ -27,6 +29,17 @@ const App=() => {
         setPersons(response.data)
       })
   }, [])
+
+  const Notification = ({message}) => {
+    if (message === null) {
+      return null
+    }
+    return(
+      <div className="error">
+        {message}
+        </div>
+    )
+  }
 
   const addName = (event) => {
     event.preventDefault()
@@ -42,6 +55,7 @@ const App=() => {
     
     } else {
     setPersons(persons.concat(nameObject))
+    setErrorMessage(`${newName} added`)
     setNewName('')
     setNewNumber('')
     
@@ -52,6 +66,7 @@ const App=() => {
     .then( response => {
       setPersons(persons.concat(response.data))
       setNewName('')
+      
     })
   }
 
@@ -62,13 +77,16 @@ const App=() => {
     .then(response =>{
       console.log(response)
       window.location.reload();
-    })
       
+    })
+    setErrorMessage(` Id ${id} removed`)
   }
 
   const handleNameChange = (event) => {
+    
     console.log(event.target.value)
     setNewName(event.target.value)
+    
   }
 
   const handleNumberChange = (event) => {
@@ -82,6 +100,7 @@ const App=() => {
   const PersonForm = () => {
     return(
       <form onSubmit= {addName}>
+        <h2>add new person</h2>
           <div>
             name:<input value={newName} onChange={handleNameChange} />
           </div>
@@ -114,6 +133,7 @@ const App=() => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage}/>   
       <SearchBox search={searchValueHandler}/>
       <PersonForm />
      
